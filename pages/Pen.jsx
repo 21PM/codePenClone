@@ -13,6 +13,8 @@ import { useSelector } from "react-redux";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../Config/firebase.config";
 import {v4 as ProjectId} from "uuid"
+import { useLocation } from 'react-router-dom';
+
 // import React from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -20,10 +22,19 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 function Pen() {
-  const [html, SetHtml] = useState("");
-  const [css, SetCss] = useState("");
-  const [js, SetJs] = useState("");
-  const [output, SetOutput] = useState("");
+
+  const location = useLocation();
+  const dataReceived = location.state?.user;
+  const penHtml = dataReceived?.html;
+  const penCss = dataReceived?.css;
+  const penjs = dataReceived?.js;
+  const penOutput = dataReceived?.output
+
+
+  const [html, SetHtml] = useState(penHtml? penHtml:"");
+  const [css, SetCss] = useState(penCss? penCss:"");
+  const [js, SetJs] = useState(penjs? penjs:"");
+  const [output, SetOutput] = useState(penOutput? penOutput:"");
   const [title, SetTitle] = useState(false);
   const [codeTitle, SetCodetitle] = useState("Untitled");
   const user = useSelector((state) => state.user?.user);

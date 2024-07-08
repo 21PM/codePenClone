@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import Pen from "./Pen";
+import {Link} from "react-router-dom"
+
 
 const PickedPens = () => {
 
+  const navigate = useNavigate();
   const projects = useSelector(store=>store.projects?.projects)
   // console.log(projects);
   const SearchValues = useSelector(state=> state.Searchvalues)
@@ -38,7 +43,7 @@ const PickedPens = () => {
       setTimeout(() => {
         SetNotFound(false)
         
-      }, 1000);
+      }, 2000);
     }
 
 
@@ -103,7 +108,12 @@ const PickedPens = () => {
   ];
 
   function openSelectedProjects(ele){
-    console.log(ele);
+    // console.log(ele);
+    
+    <Link to={{ pathname: "/pen", state:ele }}>
+    </Link>
+
+   
   }
 
   return (
@@ -117,7 +127,9 @@ const PickedPens = () => {
             
             return (
               <>
-                <div onClick={openSelectedProjects}
+    <Link to="/pen" state={{ user: ele }} key={ele.id}>
+
+                <div
                   className="w-full bg-gray-600 cursor-pointer flex min-h-80 flex-col p-2"
                   key={ele.id}
                 >
@@ -142,6 +154,7 @@ const PickedPens = () => {
                     <p>{ele.user.displayName}</p>
                   </div>
                 </div>
+                </Link>
               </>
             );
           }):<h1>Data Not Found</h1>
